@@ -1,0 +1,180 @@
+#include<stdio.h>
+#define SIZE 5
+
+void accept(int *p);
+void display(int *p,int n);
+int union_fun(int array1[ ],int array2[ ],int union_array[ ]);
+int intersection(int array1[], int array2[],int intersection_array[]);
+int difference(int array1[],int array2[],int difference_array[]);
+int sy_difference(int array1[],int array2[],int sy_array[]);
+
+int main()
+{
+    int n,y,array1[SIZE],array2[SIZE],union_array[SIZE*2],intersection_array[SIZE],difference_array[SIZE],sy_array[SIZE];
+    printf("Enter first set :\n ");
+    accept(array1);
+    display(array1,SIZE);
+
+     accept(array2);
+    display(array2,SIZE);
+
+   n=union_fun(array1,array2,union_array);
+   printf("\n *Union Set* \n");
+   display(union_array,n);
+   y=intersection(array1, array2,intersection_array);
+    printf("\n **intersection** \n");
+   display(intersection_array,y);
+   n= difference(array1, array2, difference_array);
+    printf("\n ***difference*** \n");
+   display(difference_array,n);
+    n= sy_difference(array1, array2, sy_array);
+    printf("\n ****symmetric difference**** \n");
+   display(sy_array,n);
+
+}
+void accept(int*p)
+{
+    int i;
+    for(i=0;i<SIZE;i++)
+    {
+        printf("\nEnter element %d:\n ",i+1);
+        scanf("%d",&p[i]);
+    }
+}
+
+void display(int *p,int n)
+{
+    int i;
+    printf("\n{");
+    for(i=0;i<n;i++)
+    {
+        printf(" %d\t\t",p[i]);
+    }
+    printf("}");
+}
+
+int union_fun(int array1[ ],int array2[ ],int union_array[ ])
+{
+    int i,j,k=0;
+    for(i=0;i<SIZE;i++)
+    {
+        union_array[k]=array1[i];
+        k++;
+
+    }
+    for(i=0;i<SIZE;i++)
+    {
+         for(j=0;j<SIZE;j++)
+         {
+             if(array1[j]==array2[i])
+             {
+                 break;
+             }
+         }
+         if(j==SIZE)
+         {
+             union_array[k]=array2[i];
+             k++;
+         }
+    }
+    return k;
+}
+int intersection(int array1[], int array2[],int intersection_array[])
+    {
+      int i=0,j=0,k=0;
+
+    for(i=0;i<SIZE;i++)
+{
+
+      for(j=0;j<SIZE;j++) 
+
+  {
+       if(array1[i]==array2[j]) 
+    {
+
+         intersection_array[k]=array1[i]; 
+
+         k++;
+    }
+
+   }
+
+}
+return k;
+    }
+    
+          
+int difference(int array1[],int array2[],int difference_array[])
+ {
+    int i=0,j=0,k=0;
+    while(i<SIZE)
+    {
+       j=0;
+       while(j<SIZE)
+    {
+      if(array1[i]==array2[j])
+      {
+        break;
+      }
+      j++;
+    }
+    if(j==SIZE)
+    {
+      difference_array[k]=array1[i];
+      k++;
+    }
+    i++;
+
+  }
+  return(k);
+ }
+  int sy_difference(int array1[],int array2[],int sy_array[])
+
+  {
+    int i,j,k ,p;
+    k=0;
+    for(i=0;i<SIZE;i++)
+    {
+      p=0;
+      for(j=0;j<SIZE;j++)
+      {
+        if(array1[i]==array2[j])
+        {
+          p=1;
+          break;
+        }
+      }
+      if(p==0)
+      {
+        sy_array[k]=array1[i];
+        k++;
+
+      }
+    }
+    for(i=0;i<SIZE;i++)
+    {
+      p=0;
+      for(j=0;j<SIZE;j++)
+      {
+        if(array2[i]==array1[j])
+        {
+          p=1;
+          break;
+        }
+      }
+      if(p==0)
+      {
+        sy_array[k] =array2[i];
+        k++;
+      }
+    }
+    printf("\n *****(A-B)U(B-A)*****\n");
+    for(i=0;i<k;i++)
+    {
+      printf("%d\n",sy_array[i]);
+    }
+    return k;
+  }
+
+
+    
